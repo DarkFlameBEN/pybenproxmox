@@ -675,53 +675,51 @@ class ProxmoxCls(ProxmoxAPI):
         return new_vm_dict
 
 
-def cleanup_temp_proxmox_vms(only_stopped_vms=True):
-    """Delete auto deployed proxmox vms
+    def cleanup_temp_proxmox_vms(self, only_stopped_vms=True):
+        """Delete auto deployed proxmox vms
 
-    :param only_stopped_vms: Delete only vms that are "stopped"
-    :return: List of deleted vm names
-    """
-    pm = ProxmoxCls()
-    names_to_delete = ['proxmoxWindows10', 'proxmoxWindows11', 'proxmoxVentura', 'proxmoxSonoma', 'proxmoxSequoia',
-                       'windows10', 'windows11', 'ventura', 'sonoma', 'sequoia']
-    deleted_vms = {}
-    for name in names_to_delete:
-        vms = pm.get_vms(vm_name=name)
-        for vm in vms:
-            vmid = vm['vmid']
-            if only_stopped_vms:
-                if vm['status'] == 'stopped':
-                    deleted_vms[vmid] = vm['name']
-                    pm.delete_vms_by_id([vmid])
-            else:
-                deleted_vms[vmid] = vm['name']
-                pm.delete_vms_by_id([vmid])
-    logger.info(f'Deleted {len(deleted_vms)} VMs: {deleted_vms}')
-    return deleted_vms
-
-def delete_all_permanent_jenkins_slaves_proxmox_vms(
-        clean_list=('windows10', 'windows11', 'ventura', 'sonoma', 'sequoia'),
-        only_stopped_vms=False):
-    """Delete all proxmox vms by regex that match the pattern: 'proxmox<vmid><Capitalize OS name>'
-
-    :param clean_list: List of OS names to clean. Will be used for the pattern search
-    :param only_stopped_vms: Delete only vms that are "stopped"
-    :return: List of deleted vm names
-    """
-    deleted_vms = {}
-    pm = ProxmoxCls()
-    vms = pm.get_vms()
-    for vm in vms:
-        vmid = vm['vmid']
-        known_pattern = f'proxmox{vmid}'
-        for os_name in clean_list:
-            if vm['name'] == f'{known_pattern}{os_name.capitalize()}':
+        :param only_stopped_vms: Delete only vms that are "stopped"
+        :return: List of deleted vm names
+        """
+        names_to_delete = ['proxmoxWindows10', 'proxmoxWindows11', 'proxmoxVentura', 'proxmoxSonoma', 'proxmoxSequoia',
+                           'windows10', 'windows11', 'ventura', 'sonoma', 'sequoia']
+        deleted_vms = {}
+        for name in names_to_delete:
+            vms = self.get_vms(vm_name=name)
+            for vm in vms:
+                vmid = vm['vmid']
                 if only_stopped_vms:
                     if vm['status'] == 'stopped':
                         deleted_vms[vmid] = vm['name']
-                        pm.delete_vms_by_id([vmid])
+                        self.delete_vms_by_id([vmid])
                 else:
                     deleted_vms[vmid] = vm['name']
-                    pm.delete_vms_by_id([vmid])
-    logger.info(f'Deleted {len(deleted_vms)} VMs: {deleted_vms}')
-    return deleted_vms
+                    self.delete_vms_by_id([vmid])
+        logger.info(f'Deleted {len(deleted_vms)} VMs: {deleted_vms}')
+        return deleted_vms
+
+    def delete_all_permanent_jenkins_slaves_proxmox_vms(self,
+            clean_list=('windows10', 'windows11', 'ventura', 'sonoma', 'sequoia'),
+            only_stopped_vms=False):
+        """Delete all proxmox vms by regex that match the pattern: 'proxmox<vmid><Capitalize OS name>'
+
+        :param clean_list: List of OS names to clean. Will be used for the pattern search
+        :param only_stopped_vms: Delete only vms that are "stopped"
+        :return: List of deleted vm names
+        """
+        deleted_vms = {}
+        vms = self.get_vms()
+        for vm in vms:
+            vmid = vm['vmid']
+            known_pattern = f'proxmox{vmid}'
+            for os_name in clean_list:
+                if vm['name'] == f'{known_pattern}{os_name.capitalize()}':
+                    if only_stopped_vms:
+                        if vm['status'] == 'stopped':
+                            deleted_vms[vmid] = vm['name']
+                            self.delete_vms_by_id([vmid])
+                    else:
+                        deleted_vms[vmid] = vm['name']
+                        self.delete_vms_by_id([vmid])
+        logger.info(f'Deleted {len(deleted_vms)} VMs: {deleted_vms}')
+        return deleted_vms
