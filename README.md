@@ -1,7 +1,7 @@
 # pybenproxmox
 
-![GitHub License](https://img.shields.io/github/license/DarkFlameBEN/pybenutils)
-[![PyPI - Version](https://img.shields.io/pypi/v/pybenutils)](https://pypi.org/project/pybenutils/)
+![GitHub License](https://img.shields.io/github/license/DarkFlameBEN/pybenproxmox)
+[![PyPI - Version](https://img.shields.io/pypi/v/pybenproxmox)](https://pypi.org/project/pybenproxmox/)
 ![python suggested version](https://img.shields.io/badge/python-3.12.5-red.svg)
 ![python minimum version](https://img.shields.io/badge/python(min)-3.10+-red.svg)
 ![platforms](https://img.shields.io/badge/Platforms-Linux%20|%20Windows%20|%20Mac%20-purple.svg)
