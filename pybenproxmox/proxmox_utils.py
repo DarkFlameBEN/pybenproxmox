@@ -12,7 +12,7 @@ from pybenutils.utils_logger.config_logger import get_logger
 logger = get_logger()
 
 
-class Proxmox(ProxmoxAPI):
+class ProxmoxCls(ProxmoxAPI):
     def __init__(self, host='', user='', password=''):
         """ProxmoxAPI constructor
 
@@ -681,7 +681,7 @@ def cleanup_temp_proxmox_vms(only_stopped_vms=True):
     :param only_stopped_vms: Delete only vms that are "stopped"
     :return: List of deleted vm names
     """
-    pm = Proxmox()
+    pm = ProxmoxCls()
     names_to_delete = ['proxmoxWindows10', 'proxmoxWindows11', 'proxmoxVentura', 'proxmoxSonoma', 'proxmoxSequoia',
                        'windows10', 'windows11', 'ventura', 'sonoma', 'sequoia']
     deleted_vms = {}
@@ -709,7 +709,7 @@ def delete_all_permanent_jenkins_slaves_proxmox_vms(
     :return: List of deleted vm names
     """
     deleted_vms = {}
-    pm = Proxmox()
+    pm = ProxmoxCls()
     vms = pm.get_vms()
     for vm in vms:
         vmid = vm['vmid']

@@ -11,7 +11,7 @@ PyBEN Proxmox repository is an easy to use python utility class for Proxmox serv
 
 ## proxmox_utils
 
-### Proxmox class
+### ProxmoxCls class
 Some of the included functions:
  - get_vms: Returns a full list of vms, or list with matching vms by id or name
  - clone_vms
