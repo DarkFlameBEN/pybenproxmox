@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pybenproxmox"
-version = "1.1.1"
+version = "1.1.2"
 description = "PyBEN Proxmox repository is an easy to use python utility class for Proxmox server solution"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -29,7 +29,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Libraries",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -38,7 +37,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13"
 ]
 dependencies = [
-  "pybenutils",
+  "pybenutils>=7.2.0",
   "proxmoxer",
 ]
 
