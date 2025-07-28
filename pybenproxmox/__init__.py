@@ -1,1 +1,1 @@
-from proxmox_utils import ProxmoxCls
+from .proxmox_utils import ProxmoxCls
