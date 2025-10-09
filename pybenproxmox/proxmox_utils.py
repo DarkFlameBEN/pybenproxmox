@@ -268,7 +268,6 @@ class ProxmoxCls(ProxmoxAPI):
         """Returns the first vmid not assigned to any existing vm"""
         return int(self.cluster.nextid.get())
 
-
     def shutdown_vm(self, vm_id):
         vms = self.get_vms(vm_id=vm_id)
         if not vms:
@@ -527,7 +526,6 @@ class ProxmoxCls(ProxmoxAPI):
         logger.error(f'Failed to find a template matching the given label {label}')
         return None
 
-
     def get_and_log_vm_ips(self, vm_dict):
         """Calls the proxmox agent installed on the vm and asks for network interface data,
          filters out and logs all the IP addresses of the vm. Also dumps the list into a local file name vm_ips.txt.
@@ -558,7 +556,6 @@ class ProxmoxCls(ProxmoxAPI):
     def vm_boot_cycle_to_refresh_ip(self, vm_id):
         self.start_vm(vm_id=vm_id)
         self.shutdown_vm(vm_id=vm_id)
-
 
     def update_output_file(self, vm_dict):
         """Updating the given vm_dict inside the self.clone_output_file"""
@@ -674,7 +671,6 @@ class ProxmoxCls(ProxmoxAPI):
 
         return new_vm_dict
 
-
     def cleanup_temp_proxmox_vms(self, only_stopped_vms=True):
         """Delete auto deployed proxmox vms
 
@@ -682,7 +678,7 @@ class ProxmoxCls(ProxmoxAPI):
         :return: List of deleted vm names
         """
         names_to_delete = ['proxmoxWindows10', 'proxmoxWindows11', 'proxmoxVentura', 'proxmoxSonoma', 'proxmoxSequoia',
-                           'windows10', 'windows11', 'ventura', 'sonoma', 'sequoia']
+                           'windows10', 'windows11', 'ventura', 'sonoma', 'sequoia', 'tahoe']
         deleted_vms = {}
         for name in names_to_delete:
             vms = self.get_vms(vm_name=name)
@@ -698,8 +694,9 @@ class ProxmoxCls(ProxmoxAPI):
         logger.info(f'Deleted {len(deleted_vms)} VMs: {deleted_vms}')
         return deleted_vms
 
-    def delete_all_permanent_jenkins_slaves_proxmox_vms(self,
-            clean_list=('windows10', 'windows11', 'ventura', 'sonoma', 'sequoia'),
+    def delete_all_permanent_jenkins_slaves_proxmox_vms(
+            self,
+            clean_list=('windows10', 'windows11', 'ventura', 'sonoma', 'sequoia', 'tahoe'),
             only_stopped_vms=False):
         """Delete all proxmox vms by regex that match the pattern: 'proxmox<vmid><Capitalize OS name>'
 
