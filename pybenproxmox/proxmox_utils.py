@@ -4,7 +4,7 @@ import random
 import time
 
 from proxmoxer import ProxmoxAPI
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from pybenutils.network.ssh_utils import run_commands
 from pybenutils.utils_logger.config_logger import get_logger
