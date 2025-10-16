@@ -569,9 +569,11 @@ class ProxmoxCls(ProxmoxAPI):
         with open(self.clone_output_file, 'w') as new_vms_file:
             new_vms_file.write(json.dumps(out_dict, indent=4, default=str))
 
-    def delete_vms_by_id(self, vm_ids):
+    def delete_vms_by_id(self, vm_ids: Union[List, str, int]):
         """Delete vms by ids"""
         successful = True
+        if isinstance(vm_ids, str) or isinstance(vm_ids, int):
+            vm_ids = [vm_ids]
         for vm_id in vm_ids:
             try:
                 if not self.delete_vm(vm_id=int(vm_id)):
